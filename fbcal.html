@@ -1,0 +1,35 @@
+<html>
+<head>
+	<title>Facebook-&tg;Google Calendar Sync helper</title>
+<style>
+</style>
+</head>
+<body>
+<p>Paste the URL from Facebook here:<p>
+<input name="url" id="url" />
+<p id="res">
+Use this URL instead: <a href="foo" id="outurl">blah</a>
+</p>
+<script>
+var resElem = document.getElementById('res');
+resElem.hidden = true;
+
+var inp = document.getElementById("url");
+const re = /https:\/\/www\.facebook\.com\/events\/ical\/upcoming\//
+function onUpdate(event) {
+	var val = event.target.value;
+	console.log(val);
+	if (re.test(val)) {
+	    var outUrl = event.target.value.replace(re, 'https://us-central1-fbcalsync-243815.cloudfunctions.net/fixFbCal');
+		debugger;
+	    var anchor = document.getElementById('outurl');
+	    anchor.href = outUrl;
+	    anchor.innerHTML = outUrl;
+	    resElem.hidden = false;
+	}
+}
+inp.oninput = onUpdate;
+</script>
+</body>
+</html>
+
